@@ -1,0 +1,47 @@
+
+#补丁信息
+#Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate,InstallLocation
+#卸载软件信息
+#Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate ,InstallLocation
+
+
+
+#Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*  | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate,InstallLocation | Where-Object {($_.DisplayVersion -ne $null)}
+
+$computer = Get-WMIObject  Win32_ComputerSystem | Select-Object Name   
+$user=$(Get-WMIObject -class Win32_ComputerSystem | select username)   
+$os = Get-WmiObject -class Win32_OperatingSystem | Select-Object Caption,Version   
+$ip = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $(Get-NetConnectionProfile | Select-Object -ExpandProperty InterfaceIndex) | Select-Object IPAddress
+
+#$dns = (Get-DnsClientServerAddress -AddressFamily IPv4  | where {$_.ServerAddresses -ne $null}) | Select-Object ServerAddresses
+$mac = (Get-WmiObject Win32_NetworkAdapterConfiguration | where {$_.ipenabled -EQ $true}) | Select-Object Description,Macaddress   
+$sn = Get-WmiObject -ComputerName localhost -Class Win32_BIOS | Select-Object SerialNumber   
+$admin = Get-LocalGroupMember -Group "Administrators" | Select-Object Name   
+
+#$disk=Get-WmiObject win32_logicaldisk -Filter "Drivetype=3"  | Select-Object DeviceID,VolumeName,@{Label="Total SIze";Expression={$_.Size / 1gb -as [int] }},@{Label="Free Size";Expression={$_.freespace / 1gb -as [int] }}   
+#$memory=Get-WmiObject -Class Win32_PhysicalMemory | %{$sum = 0} { $sum += $_.Capacity } {Write-Host ($sum / 1GB) "GB"}   
+
+$cpu = Get-WmiObject -Class Win32_Processor | Select-Object Name,Caption,SocketDesignation   
+$memory =Get-WmiObject -Class Win32_PhysicalMemory | Select-Object @{Label="MemorySize";Expression={$_.Capacity / 1gb -as [int] }}
+$disk = Get-WmiObject -Class Win32_DiskDrive | Select-Object Model,@{Label="DiskSize";Expression={$_.Size / 1gb -as [int] }}   
+$videocontroller = Get-WmiObject -Class Win32_VideoController | Select-Object Caption   
+
+
+#| where {$_.Vendor -notlike "*Microsoft*"} 
+#-ExpandProperty不显示字段名
+
+#软件信息
+$software = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion | Where-Object {($_.DisplayName -ne $null)}    
+#$ms_software= Get-WmiObject -Class Win32_Product | where {$_.Vendor -notlike "*Microsoft*"} | Select-Object Name,Version    
+$ms_software = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*  | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate,InstallLocation | Where-Object {($_.DisplayVersion -ne $null)}    
+
+# (Get-WmiObject -Class Win32_NetworkAdapterConfiguration | where {$_.DHCPEnabled -ne $null -and $_.DefaultIPGateway -ne $null}).IPAddress
+# Get-DnsClientServerAddress -AddressFamily IPv4 | Select-Object ServerAddresses   
+
+function main{
+    $computer,$user,$os,$ip,$mac,$sn,$admin,$cpu,$memory,$disk,$videocontroller,$software,$ms_software
+}
+
+
+
+main | ConvertTo-Json | Out-File \\xxx\$env:COMPUTERNAME.json
