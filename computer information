@@ -11,9 +11,9 @@
 $computer = Get-WMIObject  Win32_ComputerSystem | Select-Object Name   
 $user=$(Get-WMIObject -class Win32_ComputerSystem | select username)   
 $os = Get-WmiObject -class Win32_OperatingSystem | Select-Object Caption,Version   
-$ip = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $(Get-NetConnectionProfile | Select-Object -ExpandProperty InterfaceIndex) | Select-Object IPAddress
+$ip = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $(Get-NetConnectionProfile | Select-Object -ExpandProperty InterfaceIndex) | Select-Object IPAddress   
 
-#$dns = (Get-DnsClientServerAddress -AddressFamily IPv4  | where {$_.ServerAddresses -ne $null}) | Select-Object ServerAddresses
+$dns = (Get-DnsClientServerAddress -AddressFamily IPv4  | where {$_.ServerAddresses -ne $null}) | Select-Object ServerAddresses   
 $mac = (Get-WmiObject Win32_NetworkAdapterConfiguration | where {$_.ipenabled -EQ $true}) | Select-Object Description,Macaddress   
 $sn = Get-WmiObject -ComputerName localhost -Class Win32_BIOS | Select-Object SerialNumber   
 $admin = Get-LocalGroupMember -Group "Administrators" | Select-Object Name   
@@ -39,9 +39,9 @@ $ms_software = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\
 # Get-DnsClientServerAddress -AddressFamily IPv4 | Select-Object ServerAddresses   
 
 function main{
-    $computer,$user,$os,$ip,$mac,$sn,$admin,$cpu,$memory,$disk,$videocontroller,$software,$ms_software
+    $computer,$user,$os,$ip,$dns,$mac,$sn,$admin,$cpu,$memory,$disk,$videocontroller,$software,$ms_software
 }
 
 
 
-main | ConvertTo-Json | Out-File \\xxx\$env:COMPUTERNAME.json
+main | ConvertTo-Json| Out-File -Encoding "UTF8" \\fsdk\Files\Common` Shared\ITPCINFO\$env:COMPUTERNAME.json
