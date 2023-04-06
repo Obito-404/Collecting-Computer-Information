@@ -75,3 +75,4 @@ function main {
 
 main | Out-File -Encoding "UTF8" -FilePath #保存文件的路径 \\D:
 
+
