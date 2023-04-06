@@ -73,6 +73,6 @@ function main {
     } | ConvertTo-Json
 }
 
-main | Out-File -Encoding "UTF8" -FilePath #保存文件的路径 \\D:
+main | Out-File -Encoding "UTF8" -FilePath \\保存文件的路径\$env:COMPUTERNAME.json
 
 
