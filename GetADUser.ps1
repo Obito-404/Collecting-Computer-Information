@@ -5,7 +5,7 @@ $ExportPath = "D:"
 $Properties = "SamAccountName", "Name", "EmailAddress", "Department","OfficePhone"
 
 # 使用Get-ADUser命令获取所有用户信息，并使用Where-Object筛选Department不为空并且SamAccountName开头字母是s和h的用户，最后将结果导出到CSV文件
-Get-ADUser  -filter * -Properties $Properties | Where-Object { $_.Department -ne "" -and $_.SamAccountName -like "[sh]*" } | Select-Object $Properties | Export-CSV -Path "$ExportPath\ADUsers_$Date.csv" -NoTypeInformation
+Get-ADUser  -filter * -Properties $Properties | Where-Object { $_.Department -ne "" -and $_.SamAccountName -like "[sh]*" } | Select-Object $Properties | Export-CSV -Path "$ExportPath\ADUsers.csv" -NoTypeInformation
 
 #Get-ADUser -Filter * -Properties * | Export-CSV -Path "$ExportPath\ADUsers_$Date.csv" -NoTypeInformation
 
