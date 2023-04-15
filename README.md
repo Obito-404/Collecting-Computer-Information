@@ -1,47 +1,35 @@
-# 🖥️ Collecting Computer Information
+# 🖥️ Collecting computer information
 
-Collecting Computer Information is a tool that automatically retrieves hardware and software information from Active Directory. It is built using PowerShell and Python.
+Collecting computer information is a tool that can automatically capture hardware and software information in Active Directory. The tool is built using PowerShell and Python.
 
-## 🚀 Getting Started
+## 🚀 Getting started
 
-To use this tool, you will need to have PowerShell and Python installed on your machine.
+To get started with this tool, follow the steps below:
 
-### Installation
+1. Run `Computer Information.ps1` to output the information of each computer in JSON format to a specified path.
+2. Run `GetADuser.ps1` in Active Directory to export the information of each user in the domain.
+3. Use `update Information.py` to update the information obtained from `GetADuser` to `Computer Information`.
+4. Finally, write the information to SQL Server.
 
-1. Clone the repository:
+## 🛠️ Tools used
 
-```
-git clone https://github.com/username/collecting-computer-information.git
-```
+This tool is built using the following tools:
 
-2. Install the required Python modules:
+- PowerShell
+- Python
 
-```
-pip install -r requirements.txt
-```
+## 🔒 Security
 
-3. Open PowerShell and navigate to the project directory:
+This tool is designed to be secure and protect sensitive information. It does not store any passwords or other sensitive information in plain text.
 
-```
-cd path/to/collecting-computer-information
-```
+## 📝 License
 
-4. Run the script:
-
-```
-.\collect-computer-info.ps1
-```
-
-The script will prompt you for your Active Directory credentials and then start collecting computer information.
-
-## 📜 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the `LICENSE` file for more information.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
+Contributions to this project are welcome. To contribute, please fork the repository and submit a pull request.
 
-## 📧 Contact
+## 📞 Contact
 
-If you have any questions or concerns, please feel free to contact the project maintainer at [email@example.com](mailto:email@example.com).
+If you have any questions or suggestions about this tool, please feel free to contact us at [email protected]
