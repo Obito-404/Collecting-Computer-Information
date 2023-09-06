@@ -1,5 +1,9 @@
 # 🖥️  Collecting computer information
 
+<p align="center">
+    【English | <a href="README/README.zh_CN.md">Chinese</a>】
+</p>
+
 A toolset designed to automatically gather hardware and software information from computers in an Active Directory (AD) domain. It is built using PowerShell and Python.
 
 - AD Group Policy Management deploys scripts that automatically write data into a specified folder path each time a user logs in.
