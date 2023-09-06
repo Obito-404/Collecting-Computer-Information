@@ -18,8 +18,9 @@ Here are the steps for using this tool:
 1. Create a shared folder accessible to all users and grant Everyone read and write permissions.
 2. Add Computer Information.ps1 to the Group Policy Management Organizational Unit (OU). Whenever a user logs in, their computer will automatically write its hardware and software information in JSON format to the specified path that was created in step 1.
 <br>
+
 ```shell
-Out-File -Encoding "UTF8" -FilePath \\保存文件的路径\$env:COMPUTERNAME.json
+ Out-File -Encoding "UTF8" -FilePath \\保存文件的路径\$env:COMPUTERNAME.json
 ```
 **⚠️ Note: Modify the variables in the script to collect hardware or software information based on your specific requirements.**
 
