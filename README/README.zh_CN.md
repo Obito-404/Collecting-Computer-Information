@@ -14,8 +14,9 @@
 1. 创建所有用户都可以访问的共享文件，并添加Everyone的读写权限。
 2. 将`Computer Information.ps1`添加到Group Policy Management的OU。每当用户登录时，他们的计算机都会自动将其硬件和软件信息以 JSON 格式写入刚刚创建的指定路径。
 <br>
+
 ```shell
-Out-File -Encoding "UTF8" -FilePath \\保存文件的路径\$env:COMPUTERNAME.json
+ Out-File -Encoding "UTF8" -FilePath \\保存文件的路径\$env:COMPUTERNAME.json
 ```
 **⚠️ 说明: 根据自身所需要收集的硬件或软件信息更改脚本里的变量。**
 
